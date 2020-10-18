@@ -1,0 +1,90 @@
+﻿@model Assignment1.ViewModel.HillClimbingVM;
+@{
+    ViewData["Title"] = "HCDone";
+    var k = 0;
+}
+
+<div class="chess-board">
+    @for (int i = 0; i < Model.dimension; i++)
+    {
+        if (i % 2 == 0)
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+
+                    }
+                }
+                k++;
+            }
+
+        }
+        else
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+
+                    }
+                }
+                k++;
+            }
+        }
+     }
+</div>
+<div style="display:inline-block;float:right;" id="Options">
+    <form asp-action="GenerateRandomState">
+        <p>Dimension: <select name="dim" asp-for="dimension" asp-items=@Model.dimensions></select></p>
+        <input asp-for="heuristic" hidden />
+        <input asp-for="stepsInSameState" hidden />
+        <p><span>Heuristic: @Model.heuristic</span></p>
+        <p><span>Counter: @Model.counter</span></p>
+        <input type="submit" value="Generate random state" />
+    </form>
+    Number of moves in the same state <input value=@Model.stepsInSameState id="NbSteps" /><br />
+
+    <a style="pointer-events: none; cursor: default; background-color:grey" ; class="btn btn-info">Execute algorithm</a>
+    <p>Algorithm finished</p>
+</div>

@@ -1,0 +1,101 @@
+﻿@model Assignment1.ViewModel.GeneticVM;
+@{
+    ViewData["Title"] = "GeneticDone";
+    var k = 0;
+}
+
+<div class="chess-board">
+    @for (int i = 0; i < Model.dimension; i++)
+    {
+        if (i % 2 == 0)
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+
+                    }
+                }
+                k++;
+            }
+
+        }
+        else
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+
+                    }
+                }
+                k++;
+            }
+        }
+    }
+</div>
+<div style="display:inline-block;float:right" id="Options">
+    <form asp-action="GenerateRandomState">
+        <p>Dimension: <select name="dim" asp-for="dimension" asp-items=@Model.dimensions></select></p>
+        <input asp-for="dimension" hidden />
+        <input asp-for="populationSize" hidden />
+        <input asp-for="elitism" hidden />
+        <input asp-for="crossoverProb" hidden />
+        <input asp-for="mutationProb" hidden />
+        <input asp-for="numberGenerations" hidden />
+        <input asp-for="heuristic" hidden value=@Model.heuristic />
+        <p><span>Heuristic: @Model.heuristic</span></p>
+        <p><span>Counter: @Model.counter</span></p>
+        <input type="submit" value="Generate random state" />
+    </form>
+    <br />
+    <table>
+        <tr><td>Population size</td><td><input id="popSize" asp-for="populationSize" /></td></tr>
+        <tr><td>Eltisim percentage</td><td><input id="elitismPer" asp-for="elitism" /></td></tr>
+        <tr><td>Crossover probability</td><td><input id="crosProb" asp-for="crossoverProb" /></td></tr>
+        <tr><td>Mutation probability</td><td><input id="mutaProb" asp-for="mutationProb" /></td></tr>
+        <tr><td>Number of generations</td><td><input id="nbGen" asp-for="numberGenerations" /></td></tr>
+    </table>
+
+    <p>Algorithm finished</p>
+</div>

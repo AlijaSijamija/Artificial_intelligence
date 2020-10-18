@@ -1,0 +1,96 @@
+﻿@model Assignment1.ViewModel.LocalBeamSearchVM;
+
+@{
+    ViewData["Title"] = "LBSDone";
+    var k = 0;
+}
+
+<div class="chess-board">
+    @for (int i = 0; i < Model.dimension; i++)
+    {
+        if (i % 2 == 0)
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+
+                    }
+                }
+                k++;
+            }
+
+        }
+        else
+        {
+            for (int j = 0; j < Model.dimension; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="black">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="black"></div>
+                    }
+                }
+                else
+                {
+                    if (Model.array[k] == 1)
+                    {
+                        <div class="white">&#9813;</div>
+
+                    }
+                    else
+                    {
+                        <div class="white"></div>
+
+                    }
+                }
+                k++;
+            }
+        }
+    }
+</div>
+<div id="Options" style="display:inline-block;float:right">
+    <form asp-action="GenerateRandomState">
+        <p>Dimension: <select name="dim" asp-for="dimension" asp-items=@Model.dimensions></select></p>
+        <input asp-for="dimension" hidden />
+        <input asp-for="maxCounter" hidden />
+        <input asp-for="heuristic" hidden value=@Model.heuristic />
+        <p><span>Heuristic: @Model.heuristic</span></p>
+        <p><span>Counter: @Model.counter</span></p>
+        <input type="submit" value="Generate random state" />
+    </form>
+    <br />
+    <table>
+        <tr><td>Number of states</td><td><input id="numberStates" asp-for="numberStates" /></td></tr>
+        <tr><td>Max number of itterations</td><td><input id="maxCounterID" asp-for="maxCounter" /></td></tr>
+    </table>
+    <br />
+    <a style="pointer-events: none; cursor: default; background-color:grey" ; class="btn btn-info">Execute algorithm</a>
+    </br> <p>Algorithm finished </p>
+</div>

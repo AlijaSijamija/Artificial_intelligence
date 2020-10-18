@@ -1,0 +1,172 @@
+﻿@model Assignment1.ViewModel.SimulatedAnealingVM;
+@{
+    ViewData["Title"] = "Index";
+    var k = 0;
+}
+<style>
+    .container{
+        width: 100%;
+        margin: 20px;
+    }
+    .chess-board{
+        width: 550px;
+        height: 550px;
+        text-align: center;
+        border: 5px solid black;
+        float: left;
+        margin-bottom: 20px;
+    }
+    .white {
+            width: @(540/Model.dimension+"px");
+            height:@(540/Model.dimension+"px");
+            background-color: white;
+            text-align: center;
+            vertical-align: middle;
+            float: left;
+            font-size: 60px;
+            display: table-cell;
+    }
+    .black{
+        width: @(540/Model.dimension+"px");
+        height: @(540/Model.dimension+"px");
+        background-color: #808080;
+        text-align: center;
+        vertical-align: middle;
+        float: left;
+        font-size: 60px;
+        display: table-cell;
+    }
+    #NbSteps {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: 50px;
+    }
+</style>
+<h3>Simulated anealing algorithm</h3>
+
+<div id="container" class="container">
+    <div class="chess-board">
+        @for (int i = 0; i < Model.dimension; i++)
+        {
+            if (i % 2 == 0)
+            {
+                for (int j = 0; j < Model.dimension; j++)
+                {
+                    if (j % 2 == 0)
+                    {
+                        if (Model.array[k] == 1)
+                        {
+                            <div class="white">&#9813;</div>
+
+                        }
+                        else
+                        {
+                            <div class="white"></div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.array[k] == 1)
+                        {
+                            <div class="black">&#9813;</div>
+
+                        }
+                        else
+                        {
+                            <div class="black"></div>
+
+                        }
+                    }
+                    k++;
+                }
+
+            }
+            else
+            {
+                for (int j = 0; j < Model.dimension; j++)
+                {
+                    if (j % 2 == 0)
+                    {
+                        if (Model.array[k] == 1)
+                        {
+                            <div class="black">&#9813;</div>
+
+                        }
+                        else
+                        {
+                            <div class="black"></div>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.array[k] == 1)
+                        {
+                            <div class="white">&#9813;</div>
+
+                        }
+                        else
+                        {
+                            <div class="white"></div>
+
+                        }
+                    }
+                    k++;
+                }
+            }
+        }
+
+
+    </div>
+    <div style="display:inline-block; float:right" id="Options">
+        <form asp-action="GenerateRandomState">
+            <p>Select dimension: <select name="dim" asp-for="dimension" asp-items=@Model.dimensions></select></p>
+            <input asp-for="heuristic" hidden value=@Model.heuristic />
+            <input asp-for="coolingFactor" hidden />
+            <input asp-for="T0" hidden />
+            <p><span>Heuristic: @Model.heuristic</span></p>
+            <p><span>Counter: @Model.counter</span></p>
+            <input type="submit" value="Generate random state" />
+        </form>
+        <br />
+        <table>
+            <tr>
+                <td>
+                    Starting temperature
+                </td>
+                <td>
+                    <input id="T0ID" asp-for=@Model.T0 />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cooling factor
+                </td>
+                <td>
+                    <input id="coolingFactorID" asp-for=@Model.coolingFactor />
+                </td>
+            </tr>
+        </table>
+        <br />
+        <a onclick="SimulatedAnealing()" class="btn btn-info">Execute algorithm</a>
+    </div>
+</div>
+<script>
+    function SimulatedAnealing() {
+        var dim=@Model.dimension;
+        var Array = "@(Model.array == null ? string.Empty : string.Join("", Model.array))";
+        $.ajax({
+            url: '@Url.Action("SimulatedAnealingAlgorithm", "SimulatedAnealing")',
+            method: 'POST',
+            data: {
+                stringArray: Array,
+                dim:@Model.dimension,
+                T0: $("#T0ID").val(),
+                coolingFactor:$("#coolingFactorID").val()
+            },
+            success: function (data) {
+                $("#container").html(data);
+            }
+        });
+    }
+
+</script>
